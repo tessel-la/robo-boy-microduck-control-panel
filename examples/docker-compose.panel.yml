@@ -1,0 +1,12 @@
+services:
+  panel-manager:
+    volumes:
+      - ../robo-boy-microduck-control-panel:/panel-workspace/robo-boy-microduck-control-panel:ro
+  ros-stack:
+    volumes:
+      - microduck-interfaces:/overlay_ws/microduck:ro
+
+volumes:
+  microduck-interfaces:
+    external: true
+    name: microduck-interfaces

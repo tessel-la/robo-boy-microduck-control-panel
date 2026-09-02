@@ -1,0 +1,22 @@
+{
+  "name": "@tessel-la/roboboy-microduck-control-panel",
+  "version": "1.0.0",
+  "description": "Optional Robo-Boy control panel for the Microduck locomotion simulation",
+  "type": "module",
+  "license": "MIT",
+  "files": ["dist", "roboboy.panel.json", "README.md", "behavior-trees", "examples"],
+  "exports": "./dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "integrity": "node scripts/print-integrity.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "validate:artifact": "node scripts/validate-artifact.mjs",
+    "validate": "npm run typecheck && npm test && npm run validate:artifact"
+  },
+  "devDependencies": {
+    "@tessel-la/roboboy-panel-sdk": "file:../robo-boy/panel-sdk",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.2.2"
+  }
+}

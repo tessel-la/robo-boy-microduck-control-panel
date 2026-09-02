@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "tree": {
+    "id": "microduck-sit-stand-walk",
+    "name": "Microduck: sit, stand, walk",
+    "description": "A minimal action-node example for switching the official Microduck RL control pipeline between sit, stand, and walk modes.",
+    "createdAt": 0,
+    "updatedAt": 0,
+    "nodes": [
+      { "id": "sequence", "type": "sequence", "position": { "x": 80, "y": 130 }, "data": { "label": "Mode sequence", "type": "sequence" } },
+      { "id": "sit", "type": "action", "position": { "x": 370, "y": 20 }, "data": { "label": "Sit", "actionName": "/locomotion/execute_motion", "actionType": "microduck_interfaces/action/ExecuteMotion", "parameters": { "motion": "sit" }, "timeout": 3000 } },
+      { "id": "stand", "type": "action", "position": { "x": 370, "y": 130 }, "data": { "label": "Stand", "actionName": "/locomotion/execute_motion", "actionType": "microduck_interfaces/action/ExecuteMotion", "parameters": { "motion": "stand" }, "timeout": 3000 } },
+      { "id": "walk", "type": "action", "position": { "x": 370, "y": 240 }, "data": { "label": "Walk", "actionName": "/locomotion/execute_motion", "actionType": "microduck_interfaces/action/ExecuteMotion", "parameters": { "motion": "walk" }, "timeout": 3000 } }
+    ],
+    "edges": [
+      { "id": "sequence-sit", "source": "sequence", "target": "sit" },
+      { "id": "sequence-stand", "source": "sequence", "target": "stand" },
+      { "id": "sequence-walk", "source": "sequence", "target": "walk" }
+    ]
+  }
+}

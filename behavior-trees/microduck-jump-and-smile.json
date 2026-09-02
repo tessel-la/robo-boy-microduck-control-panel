@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "tree": {
+    "id": "microduck-jump-and-smile",
+    "name": "Microduck: jump and smile",
+    "description": "Opens the auxiliary mouth, runs the simulator jump action to completion, closes the mouth, then returns to the learned walk policy. Jump is a simulator primitive, not a trained policy.",
+    "createdAt": 0,
+    "updatedAt": 0,
+    "nodes": [
+      { "id": "sequence", "type": "sequence", "position": { "x": 80, "y": 180 }, "data": { "label": "Jump and smile", "type": "sequence" } },
+      { "id": "mouth-open", "type": "service", "position": { "x": 370, "y": 20 }, "data": { "label": "Open mouth", "serviceName": "/locomotion/mouth", "serviceType": "std_srvs/srv/SetBool", "request": { "data": true }, "timeout": 3000 } },
+      { "id": "jump", "type": "action", "position": { "x": 370, "y": 130 }, "data": { "label": "Jump", "actionName": "/locomotion/execute_motion", "actionType": "microduck_interfaces/action/ExecuteMotion", "parameters": { "motion": "jump" }, "timeout": 10000 } },
+      { "id": "mouth-close", "type": "service", "position": { "x": 370, "y": 240 }, "data": { "label": "Close mouth", "serviceName": "/locomotion/mouth", "serviceType": "std_srvs/srv/SetBool", "request": { "data": false }, "timeout": 3000 } },
+      { "id": "walk", "type": "action", "position": { "x": 370, "y": 350 }, "data": { "label": "Return to walk", "actionName": "/locomotion/execute_motion", "actionType": "microduck_interfaces/action/ExecuteMotion", "parameters": { "motion": "walk" }, "timeout": 3000 } }
+    ],
+    "edges": [
+      { "id": "sequence-mouth-open", "source": "sequence", "target": "mouth-open" },
+      { "id": "sequence-jump", "source": "sequence", "target": "jump" },
+      { "id": "sequence-mouth-close", "source": "sequence", "target": "mouth-close" },
+      { "id": "sequence-walk", "source": "sequence", "target": "walk" }
+    ]
+  }
+}

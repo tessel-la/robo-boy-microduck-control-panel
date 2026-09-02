@@ -1,0 +1,14 @@
+{
+  "$schema": "../../robo-boy/config/panel-sources.schema.json",
+  "schemaVersion": 2,
+  "sources": [
+    {
+      "type": "local",
+      "name": "microduck-control-example",
+      "root": "../..",
+      "rootEnv": "ROBOBOY_PANEL_WORKSPACE",
+      "repositories": ["robo-boy-microduck-control-panel"]
+    }
+  ],
+  "selection": { "mode": "all" }
+}
