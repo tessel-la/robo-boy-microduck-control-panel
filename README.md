@@ -58,6 +58,10 @@ To create another mode node, duplicate one of those action nodes and change only
 available as `/locomotion/mouth` (`std_srvs/srv/SetBool`); convenience Trigger services exist at
 `/locomotion/mouth/open` and `/locomotion/mouth/close`.
 
+The simulator repository ships five more trees in
+[`../mujoco-warp-locomotion-sim/behavior_trees`](../mujoco-warp-locomotion-sim/behavior_trees), covering the
+`/locomotion/move_relative` motion primitives, policy-then-move sequencing, and cancellation with a fallback branch.
+
 ## Panel ROS permissions
 
 | Direction | Resource | Type |
