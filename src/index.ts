@@ -67,19 +67,19 @@ export const parseStatus = (message: RoboBoyJsonObject): MicroduckStatus | null 
 
 const MARKUP = `
   <style>
-    .mdc { height: 100%; min-height: 460px; box-sizing: border-box; display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; padding: 14px; overflow: auto; color: var(--text-color, #f2f5f7); background: var(--background-secondary, #171c24); font: 14px/1.35 var(--font-family-ui, system-ui, sans-serif); user-select: none; -webkit-user-select: none; }
+    .mdc { height: 100%; min-height: 460px; box-sizing: border-box; display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; padding: 14px; overflow: auto; color: var(--text-color); background: var(--background-secondary); font: 14px/1.35 var(--font-family-ui, system-ui, sans-serif); user-select: none; -webkit-user-select: none; }
     .mdc * { box-sizing: border-box; }
     .mdc__header, .mdc__connection, .mdc__status, .mdc__row { display: flex; align-items: center; gap: 8px; }
     .mdc__header { justify-content: space-between; flex-wrap: wrap; }
     .mdc__title { margin: 0; font-size: 18px; }
-    .mdc__connection { color: var(--text-secondary, #aeb8c4); font-size: 12px; }
-    .mdc__dot { width: 9px; height: 9px; border-radius: 50%; background: #77818c; }
-    .mdc__dot[data-live="true"] { background: var(--success-color, #57d68d); box-shadow: 0 0 0 3px color-mix(in srgb, var(--success-color, #57d68d) 20%, transparent); }
-    .mdc__status { flex-wrap: wrap; padding: 9px 11px; border: 1px solid var(--border-color, #414b59); border-radius: 9px; color: var(--text-secondary, #aeb8c4); background: var(--card-bg, #242b36); font-size: 12px; }
-    .mdc__status strong { color: var(--text-color, #f2f5f7); }
+    .mdc__connection { color: var(--text-secondary); font-size: 12px; }
+    .mdc__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text-secondary); }
+    .mdc__dot[data-live="true"] { background: var(--success-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--success-color) 20%, transparent); }
+    .mdc__status { flex-wrap: wrap; padding: 9px 11px; border: 1px solid var(--border-color); border-radius: 9px; color: var(--text-secondary); background: var(--card-bg); font-size: 12px; }
+    .mdc__status strong { color: var(--text-color); }
     .mdc__grid { min-height: 0; display: grid; grid-template-columns: minmax(210px, .9fr) minmax(250px, 1.1fr); gap: 12px; }
-    .mdc__card { min-width: 0; padding: 12px; border: 1px solid var(--card-border, var(--border-color, #414b59)); border-radius: 12px; background: var(--card-bg, #242b36); }
-    .mdc__card h3 { margin: 0 0 10px; color: var(--text-secondary, #aeb8c4); font-size: 12px; text-transform: uppercase; letter-spacing: .07em; }
+    .mdc__card { min-width: 0; padding: 12px; border: 1px solid var(--card-border, var(--border-color)); border-radius: 12px; background: var(--card-bg); }
+    .mdc__card h3 { margin: 0 0 10px; color: var(--text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: .07em; }
     .mdc__drive { display: grid; grid-template-columns: repeat(3, minmax(52px, 1fr)); gap: 8px; }
     .mdc__drive button { touch-action: none; }
     .mdc__drive [data-drive="forward"] { grid-column: 2; }
@@ -87,16 +87,16 @@ const MARKUP = `
     .mdc__drive [data-drive="turn-right"] { grid-column: 3; }
     .mdc__drive [data-drive="back"] { grid-column: 2; }
     .mdc__modes { display: grid; grid-template-columns: repeat(2, minmax(100px, 1fr)); gap: 8px; }
-    .mdc button { min-height: 40px; border: 1px solid var(--border-color, #414b59); border-radius: 9px; padding: 8px 10px; color: var(--text-color, #f2f5f7); background: var(--background-color, #11161d); cursor: pointer; font: 600 13px/1.1 var(--font-family-ui, system-ui, sans-serif); }
-    .mdc button:hover:not(:disabled), .mdc button:focus-visible { border-color: var(--primary-color, #5ca9ff); }
-    .mdc button:focus-visible { outline: 2px solid var(--primary-color, #5ca9ff); outline-offset: 2px; }
+    .mdc button { min-height: 40px; border: 1px solid var(--border-color); border-radius: 9px; padding: 8px 10px; color: var(--text-color); background: var(--background-color); cursor: pointer; font: 600 13px/1.1 var(--font-family-ui, system-ui, sans-serif); }
+    .mdc button:hover:not(:disabled), .mdc button:focus-visible { border-color: var(--primary-color); }
+    .mdc button:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
     .mdc button:disabled { opacity: .42; cursor: default; }
-    .mdc button[data-active="true"] { color: var(--button-text-color, #fff); border-color: var(--primary-color, #5ca9ff); background: var(--primary-color, #347fc4); }
+    .mdc button[data-active="true"] { color: var(--button-text-color); border-color: var(--primary-color); background: var(--primary-color); }
     .mdc__actions { grid-column: 1 / -1; }
     .mdc__row { flex-wrap: wrap; }
     .mdc__row button { flex: 1 1 120px; }
-    .mdc__jump { border-color: var(--warning-color, #ffb454) !important; }
-    .mdc__feedback { min-height: 20px; margin: 10px 0 0; color: var(--text-secondary, #aeb8c4); font-size: 12px; }
+    .mdc__jump { border-color: var(--warning-color) !important; }
+    .mdc__feedback { min-height: 20px; margin: 10px 0 0; color: var(--text-secondary); font-size: 12px; }
     @media (max-width: 620px) { .mdc { padding: 10px; } .mdc__grid { grid-template-columns: 1fr; } .mdc__actions { grid-column: auto; } }
   </style>
   <section class="mdc" aria-label="Microduck controls">
@@ -111,7 +111,7 @@ const MARKUP = `
       <section class="mdc__card"><h3>Learned policy modes</h3><div class="mdc__modes">
         <button data-motion="walk">Walk</button><button data-motion="stand">Stand</button><button data-motion="sit">Sit</button><button data-motion="ground_pick">Ground pick</button><button data-motion="kick_left">Kick left</button><button data-motion="kick_right">Kick right</button><button data-motion="roulade">Roulade</button><button data-motion="recover">Recover</button>
       </div></section>
-      <section class="mdc__card mdc__actions"><h3>Robot actions</h3><div class="mdc__row"><button data-mouth="open">Open mouth</button><button data-mouth="close">Close mouth</button><button class="mdc__jump" data-action="jump">Jump</button></div><p class="mdc__feedback" data-role="feedback">Connect to ROS to begin.</p></section>
+      <section class="mdc__card mdc__actions"><h3>Robot actions</h3><div class="mdc__row"><button data-mouth="open">Open mouth</button><button data-mouth="close">Close mouth</button><button class="mdc__jump" data-action="jump">Jump</button><button data-action="stop">Stop</button><button data-action="retry">Retry telemetry</button></div><p class="mdc__feedback" data-role="feedback">Connect to ROS to begin.</p></section>
     </div>
   </section>`;
 
@@ -124,6 +124,16 @@ const createPanel = (context: RoboBoyPanelContext): RoboBoyPanelInstance => {
   let driveTimer: ReturnType<typeof setInterval> | null = null;
   let lastStatus: MicroduckStatus | null = null;
   let subscriptionGeneration = 0;
+  let subscriptionPending = false;
+  let requestedActive = true;
+  let viewport = context.viewport.getSnapshot();
+  let viewportUnsubscribe: (() => void) | null = null;
+  let statusTimer: ReturnType<typeof setInterval> | null = null;
+  let statusAt = 0;
+  let heldKey: string | null = null;
+  const active = () => Boolean(root) && requestedActive && viewport.isActive;
+  const freshStatus = () => lastStatus !== null && Date.now() - statusAt < 1500;
+  const canDrive = () => active() && connected() && freshStatus() && lastStatus?.enabled === true;
 
   const query = <T extends Element>(selector: string): T => {
     const element = root?.querySelector<T>(selector);
@@ -140,10 +150,12 @@ const createPanel = (context: RoboBoyPanelContext): RoboBoyPanelInstance => {
     if (!root) return;
     query<HTMLElement>('[data-role="connection"]').textContent = !context.ros ? "ROS unavailable" : `ROS ${connection.status}`;
     query<HTMLElement>(".mdc__dot").dataset.live = String(connected());
-    root.querySelectorAll<HTMLButtonElement>("button").forEach((button) => { button.disabled = !connected(); });
-    query<HTMLElement>('[data-role="mode"]').textContent = lastStatus?.mode ?? "—";
-    query<HTMLElement>('[data-role="policy"]').textContent = lastStatus?.policyMode ?? "—";
-    query<HTMLElement>('[data-role="mouth"]').textContent = lastStatus ? (lastStatus.mouthOpen ? "open" : "closed") : "—";
+    root.querySelectorAll<HTMLButtonElement>("button").forEach((button) => {
+      button.disabled = !active() || !connected() || (Boolean(button.dataset.drive) && !canDrive());
+    });
+    query<HTMLElement>('[data-role="mode"]').textContent = (freshStatus() ? lastStatus?.mode : null) ?? "—";
+    query<HTMLElement>('[data-role="policy"]').textContent = (freshStatus() ? lastStatus?.policyMode : null) ?? "—";
+    query<HTMLElement>('[data-role="mouth"]').textContent = freshStatus() ? (lastStatus?.mouthOpen ? "open" : "closed") : "—";
     root.querySelectorAll<HTMLButtonElement>("[data-motion]").forEach((button) => {
       button.dataset.active = String(button.dataset.motion === lastStatus?.policyMode);
     });
@@ -163,21 +175,26 @@ const createPanel = (context: RoboBoyPanelContext): RoboBoyPanelInstance => {
 
   const stopDrive = () => {
     if (driveTimer) clearInterval(driveTimer);
+    const wasDriving = driveTimer !== null;
     driveTimer = null;
-    void publishVelocity(ZERO).catch((error) => context.logger.warn("Could not stop Microduck.", error));
+    heldKey = null;
+    if (wasDriving) void publishVelocity(ZERO).catch((error) => context.logger.warn("Could not stop Microduck.", error));
   };
 
   const startDrive = (control: DriveControl) => {
     stopDrive();
+    if (!canDrive()) return;
     const velocity = velocityForControl(control);
-    void publishVelocity(velocity).catch((error) => feedback(`Drive failed: ${String(error)}`));
+    void publishVelocity(velocity).catch((error) => { stopDrive(); feedback(`Drive failed: ${String(error)}`); });
     driveTimer = setInterval(() => {
-      void publishVelocity(velocity).catch((error) => context.logger.warn("Drive publish failed.", error));
+      if (!canDrive()) { stopDrive(); render(); return; }
+      void publishVelocity(velocity).catch((error) => { stopDrive(); feedback(`Drive failed: ${String(error)}`); });
     }, 50);
   };
 
   const selectMotion = async (motion: PolicyMotion) => {
-    if (!context.ros || !connected()) return;
+    if (!context.ros || !connected() || !active()) return;
+    stopDrive();
     feedback(`Selecting ${motion.replace(/_/g, " ")}…`);
     try {
       await context.ros.publish({ topic: POLICY_TOPIC, messageType: "std_msgs/msg/String", message: { data: motion } });
@@ -188,7 +205,7 @@ const createPanel = (context: RoboBoyPanelContext): RoboBoyPanelInstance => {
   };
 
   const setMouth = async (opened: boolean) => {
-    if (!context.ros || !connected()) return;
+    if (!context.ros || !connected() || !active()) return;
     try {
       const response = await context.ros.callService({ service: "/locomotion/mouth", serviceType: "std_srvs/srv/SetBool", request: { data: opened } });
       feedback(response.success === false ? String(response.message ?? "Mouth command failed.") : `Mouth ${opened ? "opening" : "closing"}.`);
@@ -198,7 +215,7 @@ const createPanel = (context: RoboBoyPanelContext): RoboBoyPanelInstance => {
   };
 
   const jump = async () => {
-    if (!context.ros || !connected()) return;
+    if (!context.ros || !connected() || !active()) return;
     try {
       const response = await context.ros.callService({ service: "/locomotion/jump", serviceType: "std_srvs/srv/Trigger", request: {} });
       feedback(response.success === false ? String(response.message ?? "Jump failed.") : "Jump requested.");
@@ -207,44 +224,98 @@ const createPanel = (context: RoboBoyPanelContext): RoboBoyPanelInstance => {
     }
   };
 
+  const unsubscribe = (subscription: RoboBoyRosSubscription) => {
+    void subscription.unsubscribe().catch((error) => context.logger.warn("Status cleanup failed.", error));
+  };
+
   const stopSubscription = () => {
     subscriptionGeneration += 1;
+    subscriptionPending = false;
     const current = statusSubscription;
     statusSubscription = null;
-    if (current) void current.unsubscribe().catch((error) => context.logger.warn("Status cleanup failed.", error));
+    lastStatus = null;
+    statusAt = 0;
+    if (current) unsubscribe(current);
   };
 
   const ensureSubscription = () => {
-    if (!root || !context.ros || !connected() || statusSubscription) return;
+    if (!active() || !context.ros || !connected() || statusSubscription || subscriptionPending) return;
     const generation = ++subscriptionGeneration;
+    subscriptionPending = true;
     void context.ros.subscribe(
       { topic: STATUS_TOPIC, messageType: "std_msgs/msg/String", queueLength: 1 },
       (message) => {
+        if (generation !== subscriptionGeneration || !active() || !connected()) return;
         const parsed = parseStatus(message);
-        if (parsed) { lastStatus = parsed; render(); }
+        if (parsed) {
+          const wasFresh = freshStatus();
+          lastStatus = parsed;
+          statusAt = Date.now();
+          render();
+          if (!wasFresh) feedback("Ready. Hold a drive button or choose an action.");
+        }
       },
     ).then((subscription) => {
-      if (!root || generation !== subscriptionGeneration || !connected()) { void subscription.unsubscribe(); return; }
+      if (generation !== subscriptionGeneration || !active() || !connected()) { unsubscribe(subscription); return; }
+      subscriptionPending = false;
       statusSubscription = subscription;
-      feedback("Ready. Hold a drive button or choose an action.");
+      feedback(freshStatus() ? "Ready. Hold a drive button or choose an action." : "Waiting for live telemetry. Hold a drive button once controls are ready.");
     }, (error) => {
+      if (generation !== subscriptionGeneration || !active()) return;
+      subscriptionPending = false;
       context.logger.warn("Microduck status subscription failed.", error);
-      feedback("Controls are available, but status could not be subscribed.");
+      feedback("Status is unavailable. Choose Retry telemetry.");
     });
   };
 
-  const onPointerDown = (event: Event) => {
+  const reconcile = () => {
+    if (!active() || !connected()) {
+      stopDrive();
+      stopSubscription();
+      if (statusTimer) clearInterval(statusTimer);
+      statusTimer = null;
+    } else {
+      ensureSubscription();
+      if (!statusTimer) statusTimer = setInterval(() => {
+        if (!freshStatus()) stopDrive();
+        render();
+      }, 250);
+    }
+    render();
+  };
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Escape") { stopDrive(); return; }
     const button = (event.target as Element).closest<HTMLButtonElement>("[data-drive]");
-    if (!button?.dataset.drive || !connected()) return;
+    if (!button?.dataset.drive || !["Enter", " "].includes(event.key)) return;
     event.preventDefault();
+    if (event.repeat || button.disabled) return;
+    startDrive(button.dataset.drive as DriveControl);
+    heldKey = event.key;
+  };
+  const onKeyUp = (event: KeyboardEvent) => {
+    if (event.key === heldKey) { event.preventDefault(); stopDrive(); }
+  };
+
+  const onPointerDown = (event: PointerEvent) => {
+    const button = (event.target as Element).closest<HTMLButtonElement>("[data-drive]");
+    if (!button?.dataset.drive || button.disabled || !canDrive() || event.button > 0) return;
+    event.preventDefault();
+    button.setPointerCapture?.(event.pointerId);
     startDrive(button.dataset.drive as DriveControl);
   };
   const onClick = (event: Event) => {
     const button = (event.target as Element).closest<HTMLButtonElement>("button");
-    if (!button || button.disabled) return;
+    if (!button || button.disabled || !active()) return;
     if (button.dataset.motion) void selectMotion(button.dataset.motion as PolicyMotion);
     else if (button.dataset.mouth) void setMouth(button.dataset.mouth === "open");
     else if (button.dataset.action === "jump") void jump();
+    else if (button.dataset.action === "stop") {
+      const wasDriving = driveTimer !== null;
+      stopDrive();
+      if (!wasDriving) void publishVelocity(ZERO).catch((error) => feedback(`Stop failed: ${String(error)}`));
+    }
+    else if (button.dataset.action === "retry") { stopDrive(); stopSubscription(); ensureSubscription(); render(); }
   };
 
   return {
@@ -255,6 +326,10 @@ const createPanel = (context: RoboBoyPanelContext): RoboBoyPanelInstance => {
       if (!root) throw new Error("Microduck Control markup could not be created.");
       root.addEventListener("pointerdown", onPointerDown);
       root.addEventListener("click", onClick);
+      root.addEventListener("keydown", onKeyDown);
+      root.addEventListener("lostpointercapture", stopDrive);
+      root.addEventListener("focusout", stopDrive);
+      window.addEventListener("keyup", onKeyUp);
       window.addEventListener("pointerup", stopDrive);
       window.addEventListener("pointercancel", stopDrive);
       window.addEventListener("blur", stopDrive);
@@ -262,18 +337,29 @@ const createPanel = (context: RoboBoyPanelContext): RoboBoyPanelInstance => {
         const changed = snapshot.generation !== connection.generation;
         connection = snapshot;
         if (!connected() || changed) { stopDrive(); stopSubscription(); }
-        render();
-        ensureSubscription();
+        reconcile();
       });
-      render();
-      ensureSubscription();
+      viewportUnsubscribe = context.viewport.subscribe((snapshot) => {
+        if (snapshot.width !== viewport.width || snapshot.height !== viewport.height) stopDrive();
+        viewport = snapshot;
+        reconcile();
+      });
+      reconcile();
     },
-    setActive(active) { if (!active) stopDrive(); root?.toggleAttribute("data-inactive", !active); },
+    setActive(value) { requestedActive = value; reconcile(); },
     unmount() {
       stopDrive();
       stopSubscription();
       connectionUnsubscribe?.();
       connectionUnsubscribe = null;
+      viewportUnsubscribe?.();
+      viewportUnsubscribe = null;
+      if (statusTimer) clearInterval(statusTimer);
+      statusTimer = null;
+      window.removeEventListener("keyup", onKeyUp);
+      root?.removeEventListener("keydown", onKeyDown);
+      root?.removeEventListener("lostpointercapture", stopDrive);
+      root?.removeEventListener("focusout", stopDrive);
       window.removeEventListener("pointerup", stopDrive);
       window.removeEventListener("pointercancel", stopDrive);
       window.removeEventListener("blur", stopDrive);

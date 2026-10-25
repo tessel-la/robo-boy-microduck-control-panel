@@ -7,8 +7,15 @@
       "name": "microduck-control-example",
       "root": "../..",
       "rootEnv": "ROBOBOY_PANEL_WORKSPACE",
-      "repositories": ["robo-boy-microduck-control-panel"]
+      "repositories": [
+        "robo-boy-microduck-control-panel"
+      ]
     }
   ],
-  "selection": { "mode": "all" }
+  "selection": {
+    "mode": "include",
+    "panelIds": [
+      "la.tessel.roboboy.microduck-control"
+    ]
+  }
 }

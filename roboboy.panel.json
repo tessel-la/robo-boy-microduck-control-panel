@@ -5,20 +5,38 @@
   "description": "Drive Microduck, select learned motion modes, move its mouth, and trigger a simulated jump.",
   "version": "1.0.0",
   "entryPoint": "./dist/index.js",
-  "integrity": "sha256-SUVsaIfuZUEPKZQt9BoTOtsmzohg4Ng5fltNJkht2Ys=",
+  "integrity": "sha256-G2/eRWDnQTbxC7bdirbm2NnVm/hIdxv0CKK2Ev5PJ3U=",
   "compatibility": {
     "panelApi": "^2.0.0",
     "roboboy": ">=0.3.0-0 <1.0.0"
   },
-  "capabilities": ["ros"],
+  "capabilities": [
+    "ros"
+  ],
   "permissions": {
     "ros": {
-      "subscribe": ["/locomotion/status"],
-      "publish": ["/cmd_vel", "/locomotion/policy_cmd"],
-      "services": ["/locomotion/mouth", "/locomotion/jump"]
+      "subscribe": [
+        "/locomotion/status"
+      ],
+      "publish": [
+        "/cmd_vel",
+        "/locomotion/policy_cmd"
+      ],
+      "services": [
+        "/locomotion/mouth",
+        "/locomotion/jump"
+      ]
     }
   },
-  "author": { "name": "Tessella" },
+  "author": {
+    "name": "tessel·la"
+  },
   "repository": "https://github.com/tessel-la/robo-boy-microduck-control-panel",
-  "tags": ["ros", "microduck", "locomotion", "reinforcement-learning", "simulation"]
+  "tags": [
+    "ros",
+    "microduck",
+    "locomotion",
+    "reinforcement-learning",
+    "simulation"
+  ]
 }

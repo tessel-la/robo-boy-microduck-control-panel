@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "bootstrap-sha": "db0a2c071121249785ebccf4a3530fd88ba64bef",
+  "include-v-in-tag": true,
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "@tessel-la/roboboy-microduck-control-panel",
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "roboboy.panel.json",
+          "jsonpath": "$.version"
+        }
+      ]
+    }
+  }
+}
