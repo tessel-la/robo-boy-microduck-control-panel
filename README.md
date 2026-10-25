@@ -5,6 +5,11 @@ Drive the Microduck simulation, select learned motion modes, move its mouth, and
 This independently installed external panel uses Robo-Boy's sandbox and brokered ROS API.
 It requests only the exact ROS resources declared in [roboboy.panel.json](roboboy.panel.json).
 
+![Microduck Control panel with drive buttons, policy modes, mouth controls, and Stop](docs/images/control-panel.png)
+
+Panel preview with sample telemetry. No third-party robot model is shown.
+See [preview provenance](docs/images/README.md).
+
 ## Install and run
 
 Use a Robo-Boy deployment with Panel API v2 and the official Panel Inventory configured.
