@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/tessel-la/robo-boy-microduck-control-panel/compare/v1.1.0...v1.2.0) (2026-10-25)
+
+
+### Features
+
+* promote dev to master ([#7](https://github.com/tessel-la/robo-boy-microduck-control-panel/issues/7)) ([c708f6b](https://github.com/tessel-la/robo-boy-microduck-control-panel/commit/c708f6b3e16e0f3ab5b57c8873c82815409ca5d2))
+
 ## [1.1.0](https://github.com/tessel-la/robo-boy-microduck-control-panel/compare/v1.0.0...v1.1.0) (2026-10-25)
 
 
