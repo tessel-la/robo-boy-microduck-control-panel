@@ -1,45 +1,57 @@
-# Robo-Boy Microduck Control Panel
+# Microduck Control for Robo-Boy
 
-An optional external Robo-Boy panel for the sibling `mujoco-warp-locomotion-sim` project. It is intentionally not a
-built-in/default panel: install it through the Panel Manager, then add **Microduck Control** from the workspace panel
-menu when you need it.
+Drive the Microduck simulation, select learned motion modes, move its mouth, and trigger a simulator jump from a Robo-Boy workspace tile.
 
-The panel provides hold-to-drive controls, every policy mode shipped with the simulator, mouth open/close buttons,
-and a jump button. The UI labels jump as a simulator primitive because Pollen's bundled ONNX policies do not contain
-a trained jump policy.
+This independently installed external panel uses Robo-Boy's sandbox and brokered ROS API.
+It requests only the exact ROS resources declared in [roboboy.panel.json](roboboy.panel.json).
 
-## Run the complete example
+## Install and run
 
-Build the panel once:
+Use a Robo-Boy deployment with Panel API v2 and the official Panel Inventory configured.
+See [Robo-Boy's installation guide](https://github.com/tessel-la/robo-boy/blob/main/docs/external-panels.md#remote-inventories-and-private-panels)
+for the authenticated Panel Manager setup.
+
+1. Start the [Microduck simulator](https://github.com/tessel-la/mujoco-warp-locomotion-sim) using its CPU quickstart and the same ROS discovery settings as Robo-Boy. Run one simulator per ROS domain.
+2. Open **Manage installations…**, browse the official inventory, select **Microduck Control**, review its ROS permissions, and apply the installation.
+3. Connect Robo-Boy to the simulator's ROS stack and add **Microduck Control** from the workspace panel menu.
+4. Request control from Robo-Boy's control menu before driving.
+
+Installing the panel does not start the simulator. Published panel users do not need Node.js,
+this source checkout, or the SDK. Releases must be published and registered before this panel
+appears in the official inventory; maintainers follow [the release guide](docs/releasing.md).
+
+## Develop
+
+Use Node.js 22 or later and npm. No sibling source checkout is needed to build: the type-only
+SDK is pinned to its public GitHub release and dependencies are locked.
 
 ```bash
-cd ../robo-boy-microduck-control-panel
-npm install
-npm run validate
+git clone https://github.com/tessel-la/robo-boy-microduck-control-panel.git
+cd robo-boy-microduck-control-panel
+npm ci
+npm run release:prepare
 ```
 
-Start the Microduck stack, then start Robo-Boy with this repository as a one-off local panel source:
+This runs typecheck, tests, build, SRI generation, and artifact validation. After source changes,
+rebuild and update SRI before installing. Use the local source configuration with a sibling
+Robo-Boy checkout for frontend development:
 
 ```bash
-cd ../mujoco-warp-locomotion-sim
-docker compose --env-file ../robo-boy/.env up --build
-
 cd ../robo-boy
-ROBOBOY_PANEL_SOURCES_FILE=../robo-boy-microduck-control-panel/examples/panel-sources.json \
-  docker compose -f docker-compose.yml -f infra/compose/panels.yml \
-  -f ../robo-boy-microduck-control-panel/examples/docker-compose.panel.yml up --build
+npm run dev:panels -- --config ../robo-boy-microduck-control-panel/examples/panel-sources.json
 ```
 
-Starting the simulator first creates the shared `microduck-interfaces` Docker volume. The opt-in Robo-Boy Compose
-file mounts that generated overlay into rosbridge, which is required for action discovery and goal serialization.
+For Docker, use `examples/docker-compose.panel.yml` with Robo-Boy's local panel overlay;
+see [custom panels](https://github.com/tessel-la/robo-boy/blob/main/docs/custom-panels.md).
+Keep the manager authenticated and preserve other selections in an existing deployment.
 
-Connect Robo-Boy to ROS, open the workspace panel menu, and add **Microduck Control**. This example source file is
-opt-in and does not alter Robo-Boy's checked-in default or local panel inventory.
+## How it fits
 
-For Robo-Boy frontend development, add this repository to a private/local `panel-sources.json` and mount it under the
-same `/panel-workspace/robo-boy-microduck-control-panel` path, then run `npm run dev:panels` in Robo-Boy.
+The panel owns its UI and command lifecycle. The simulator owns physics, policies, watchdogs,
+and ROS services. Robo-Boy owns the sandbox, control gateway, installation, and workspace.
+[AGENTS.md](AGENTS.md) and [CONTRIBUTING.md](CONTRIBUTING.md) describe source contributions.
 
-## Behavior Tree examples
+## Behavior tree examples
 
 The simulator exposes `/locomotion/execute_motion` as
 `microduck_interfaces/action/ExecuteMotion`. Its `motion` goal accepts:
@@ -59,7 +71,7 @@ available as `/locomotion/mouth` (`std_srvs/srv/SetBool`); convenience Trigger s
 `/locomotion/mouth/open` and `/locomotion/mouth/close`.
 
 The simulator repository ships five more trees in
-[`../mujoco-warp-locomotion-sim/behavior_trees`](../mujoco-warp-locomotion-sim/behavior_trees), covering the
+[the simulator behavior trees](https://github.com/tessel-la/mujoco-warp-locomotion-sim/tree/main/behavior_trees), covering the
 `/locomotion/move_relative` motion primitives, policy-then-move sequencing, and cancellation with a fallback branch.
 
 ## Panel ROS permissions
@@ -73,3 +85,16 @@ The simulator repository ships five more trees in
 | Service | `/locomotion/jump` | `std_srvs/srv/Trigger` |
 
 The manifest grants only those exact ROS resources. It grants no network, storage, device, or broad discovery access.
+
+## Limitations
+
+- This panel controls the simulator, not physical hardware. **Stop** behavior sends zero velocity; it is not a hardware emergency stop.
+- Drive requires fresh enabled simulator status. It stops on release, keyboard release, focus loss, resize, stale telemetry, disconnect, inactivity, or removal. Reconnecting never resumes a held input.
+- Hold Enter or Space on a focused drive button; release it to stop. Escape stops a held direction. Turning includes forward motion; lateral walking is not offered because the current policy does not reliably produce it.
+- Jump is a bounded simulator primitive, not a learned policy. Action goals run through Robo-Boy's behavior-tree tools because Panel API v2 has no action API.
+- The simulator's third-party CAD assets have non-commercial terms; see its third-party notices. This panel's own code is MIT licensed.
+
+
+## License
+
+MIT; see [LICENSE](LICENSE). The SDK is a separate type-only dependency with its own notice.
