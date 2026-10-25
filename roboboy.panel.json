@@ -3,7 +3,7 @@
   "id": "la.tessel.roboboy.microduck-control",
   "name": "Microduck Control",
   "description": "Drive Microduck, select learned motion modes, move its mouth, and trigger a simulated jump.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "entryPoint": "./dist/index.js",
   "integrity": "sha256-G2/eRWDnQTbxC7bdirbm2NnVm/hIdxv0CKK2Ev5PJ3U=",
   "compatibility": {
